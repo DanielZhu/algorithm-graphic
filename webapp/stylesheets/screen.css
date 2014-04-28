@@ -1,0 +1,179 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../Environment/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url("/font/fontawesome-webfont.eot");
+  src: url("/font/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("/font/fontawesome-webfont.woff") format("woff"), url("/font/fontawesome-webfont.ttf") format("truetype"), url("/font/fontawesome-webfont.svgz#FontAwesomeRegular") format("svg"), url("/font/fontawesome-webfont.svg#FontAwesomeRegular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 3, ../al-gra/sass/base/_layout.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 7, ../al-gra/sass/base/_layout.scss */
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  background: #eeeeee;
+  color: #666666;
+}
+@media screen and (max-width: 1040px) {
+  /* line 7, ../al-gra/sass/base/_layout.scss */
+  body {
+    margin: 0 20px;
+  }
+}
+@media screen and (max-width: 600px) {
+  /* line 7, ../al-gra/sass/base/_layout.scss */
+  body {
+    font-size: 13px;
+  }
+}
+
+/* line 20, ../al-gra/sass/base/_layout.scss */
+h1 {
+  font-size: 1.8em;
+}
+
+/* line 23, ../al-gra/sass/base/_layout.scss */
+h2 {
+  font-size: 1.5em;
+}
+
+/* line 26, ../al-gra/sass/base/_layout.scss */
+h3 {
+  font-size: 1.3em;
+}
+
+/* line 29, ../al-gra/sass/base/_layout.scss */
+a {
+  text-decoration: none;
+  outline-width: 0;
+  color: #258fb8;
+}
+
+/* line 34, ../al-gra/sass/base/_layout.scss */
+.alignleft {
+  float: left;
+}
+
+/* line 37, ../al-gra/sass/base/_layout.scss */
+.alignright {
+  float: right;
+}
+
+/* line 40, ../al-gra/sass/base/_layout.scss */
+.inner {
+  width: 1000px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 1040px) {
+  /* line 40, ../al-gra/sass/base/_layout.scss */
+  .inner {
+    width: 100%;
+  }
+}
+
+/* line 2, ../al-gra/sass/base/_typography.scss */
+.pullquote-right:before,
+.pullquote-left:before {
+  /* Reset metrics. */
+  padding: 0;
+  border: none;
+  /* Content */
+  content: attr(data-pullquote);
+  /* Pull out to the right, modular scale based margins. */
+  float: right;
+  width: 45%;
+  margin: .5em 0 1em 1.5em;
+  /* Baseline correction */
+  position: relative;
+  top: 7px;
+  font-size: 1.4em;
+  line-height: 1.45em;
+}
+
+/* line 22, ../al-gra/sass/base/_typography.scss */
+.pullquote-left:before {
+  /* Make left pullquotes align properly. */
+  float: left;
+  margin: .5em 1.5em 1em 0;
+}
+
+/* line 1, ../al-gra/sass/custom/_custom.scss */
+body {
+  font-family: 'Open Sans', 'Anonymous Pro', 'Source Code Pro';
+  font-size: 12px;
+}
