@@ -76,8 +76,9 @@ window.debug = (function(){
     // Logging methods, in "priority order". Not all console implementations
     // will utilize these, but they will be used in the callback passed to
     // setCallback.
+    // log (5) < debug (4) < info (3) < warn (2) < error (1)
     log_methods = [ 'error', 'warn', 'info', 'debug', 'log' ],
-    
+  
     // Pass these methods through to the console if they exist, otherwise just
     // fail gracefully. These methods are provided for convenience.
     pass_methods = 'assert clear count dir dirxml exception group groupCollapsed groupEnd profile profileEnd table time timeEnd trace'.split(' '),
