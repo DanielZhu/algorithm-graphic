@@ -1,4 +1,4 @@
-var sortUtility = (function(){
+var sortUtility = (function($){
 	
 	// Max in the end, min in the start
 
@@ -371,4 +371,4 @@ var sortUtility = (function(){
 		shellSort: _shellSort,
 		mergeSort: _mergeSort
 	}
-})();
+})(jQuery);

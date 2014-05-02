@@ -1,4 +1,4 @@
-var timer = (function($){
+var danTimer = (function($){
 	var _trackDetailList,
 		_trackList;
 
@@ -54,5 +54,4 @@ var timer = (function($){
 		resetTimer: _resetTimer,
 		getTrackTimerByKey: _getTrackTimerByKey
   	}
-
 })(jQuery);
