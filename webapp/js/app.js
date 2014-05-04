@@ -1,25 +1,43 @@
-var App = {
+function AppController ($scope) {
 	// Timer initialization
 
-	initialApp: function () {
-		var canvasEle = document.getElementById('sortGraphic');
-		var testArray = this.randomNumbers(5, 10);
+	$scope.canvasEle = null;
+	$scope.tobeSortArray = [];
+	$scope.sortedArrayHistory = [];
+	$scope.sortMethod = ['bubble', 'lazyInsertion', 'insertion', 'selection', 'quick', 'heap', 'shell', 'merge'];
+
+	initialApp = function () {
+		$scope.canvasEle = document.getElementById('sortGraphic');
 
 		danTimer.init();
 		debug.setLevel(9);
 
-		this.excuteSort(testArray, canvasEle);
-	},
-	
-	excuteSort: function (testArray, canvasEle) {
-		var key = 'bubbleSort';
+		barGraph.prepareCanvas($scope.canvasEle);
+		// this.excuteSort(testArray, canvasEle);
+	};
+
+	$scope.convertStringToArray = function () {
+		// var dataArray = $scope.tobeSortArray.split(',');
+		// $scope.$apply(function () {
+  //           $scope.tobeSortArray = dataArray;
+  //       });
+		$scope.tobeSortArray = $scope.randomNumbers(4, 14);
+		$scope.sortedArrayHistory.push($scope.tobeSortArray);
+		barGraph.resetCanvas(true);
+		$scope.excuteSort();
+	}
+
+	$scope.excuteSort = function () {
+		var key = 'bubbleSort',
+			testArray = $scope.tobeSortArray;
+
 		danTimer.createNewTimer(key);
 
 		sortUtility.bubbleSort(testArray).then(
 			function (response) {
 				doneCallback(response, key);
 
-				barGraph.initBarGraph(response, canvasEle);
+				barGraph.initBarGraph(response);
 				barGraph.generateBarGraph();
 			}
 		);
@@ -48,13 +66,13 @@ var App = {
 			}
 		);
 
-		key = 'heapSort';
-		danTimer.createNewTimer(key);
-		sortUtility.heapSort(testArray.slice(0)).then(
-			function (response) {
-				doneCallback(response, key);
-			}
-		);
+		// key = 'heapSort';
+		// danTimer.createNewTimer(key);
+		// sortUtility.heapSort(testArray.slice(0)).then(
+		// 	function (response) {
+		// 		doneCallback(response, key);
+		// 	}
+		// );
 
 		key = 'quickSort';
 		danTimer.createNewTimer(key);
@@ -69,9 +87,9 @@ var App = {
 			danTimer.stopTimer(key);
 			debug.info(key + ': ' + danTimer.getTrackTimerByKey(key) + ' ms');
 		};
-	},
+	};
 
-	randomNumbers: function (digits, size) {
+	$scope.randomNumbers = function (digits, size) {
 		var arr = [];
 
 		while (arr.length < size) {
@@ -80,4 +98,4 @@ var App = {
 
 		return arr;
 	}
-};
+}

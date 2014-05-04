@@ -1,5 +1,5 @@
 var sortUtility = (function($){
-	
+
 	// Max in the end, min in the start
 
 	/**
@@ -9,7 +9,7 @@ var sortUtility = (function($){
 	 */
 	function _bubbleSort (arr) {
 		var i = 0,
-			j = 0, 
+			j = 0,
 			swappedFlag = false,
 			defer = new $.Deferred();
 
@@ -37,16 +37,16 @@ var sortUtility = (function($){
 
 	/**
 	 * Insertion Sort
-	 * 
-	 * Poor version 
-	 * 
+	 *
+	 * Poor version
+	 *
 	 * Need an extra array space to keep a temp array
 	 */
 	function _lazyInsertionSort (arr) {
 		var i = 0,
 			currentItem,
 			finalArr = [];
-		
+
 		if (arr !== undefined && arr.length > 1) {
 			finalArr[0] = arr.splice(0, 1)[0];
 			while (arr.length > 0) {
@@ -104,7 +104,7 @@ var sortUtility = (function($){
 			temp,
 			executeIndex = 0,
 			defer = new $.Deferred();
-		
+
 		for (executeIndex; executeIndex < arr.length; executeIndex++) {
 			minValue = arr[executeIndex];
 			for (var i = executeIndex; i < arr.length; i++) {
@@ -133,11 +133,11 @@ var sortUtility = (function($){
 	 *
 	 */
 	function _quickSort (arr, start, end) {
-		var k, 
-			i = start, 
+		var k,
+			i = start,
 			j = end,
 			defer = new $.Deferred();
-				
+
 		if (start < end) {
 			k = arr[start];
 			while (i < j) {
@@ -164,7 +164,7 @@ var sortUtility = (function($){
 			}
 
 		}
-		
+
 		defer.resolve(arr);
 		return defer.promise();
 	}
@@ -172,15 +172,15 @@ var sortUtility = (function($){
 	/**
 	 *
 	 * 堆排序 (大堆根)
-	 * 建堆 -> 调堆 
+	 * 建堆 -> 调堆
 	 *
 	 */
 	function _heapSort (arr) {
-		var temp, 
+		var temp,
 			finalHeap = [],
 			defer = new $.Deferred();
-		
-				
+
+
 		if (arr.length > 1)　{
 			_adjustHeap(arr);
 		}
@@ -195,13 +195,13 @@ var sortUtility = (function($){
 			finalHeap.splice(0, 0, temp);
 		}
 		// document.write(finalHeap.toString());
-		
+
 		defer.resolve(finalHeap);
 		return defer.promise();
-	} 
+	}
 
 	/*
-	 * Start with the last root node, if its two children bigger than itself, exchange them. 
+	 * Start with the last root node, if its two children bigger than itself, exchange them.
 	 * Make sure all the roots and their children fit the heap requirement.
 	 *
 	 * Root > Children
@@ -225,7 +225,7 @@ var sortUtility = (function($){
 	/*
 	 * Shell Sort
 	 *
-	 * Example: 
+	 * Example:
 	 * 13,27,49,55,4,49,38,65,97,76	(increment = 5)
 	 * 4,27,13,49,38,55,49,65,97,76	(increment = 2)
 	 * 4,13,27,38,49,49,55,65,76,97 (increment = 1)
@@ -235,7 +235,7 @@ var sortUtility = (function($){
 		var increment,
 			groupedArr = [],
 			defer = new $.Deferred();
-	
+
 		if (arr.length > 1) {
 			increment = parseInt(arr.length / 2);
 			while (increment >= 1) {
@@ -289,7 +289,7 @@ var sortUtility = (function($){
 	// 		// if (arr.toString() !== copyArr) {
 	// 			return _quickSort(arr, 0, j - 1)+_quickSort(arr, j + 1, end);
 	// 		// }
-			
+
 	// 	} else {
 	// 		document.write(arr.toString());
 	// 		document.write('<br >');
