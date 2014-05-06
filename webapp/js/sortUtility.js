@@ -1,7 +1,19 @@
 var sortUtility = (function($){
-
+	var _sortHistory = [];
 	// Max in the end, min in the start
 
+	function _callSort(method, array) {
+		var sortFun = '_' + method.toLowerCase() + 'Sort([' + array + '])';
+
+		_clearSortHistory();
+
+		return eval(sortFun);
+	}
+
+	function _clearSortHistory () {
+		_sortHistory = [];
+		_sortHistory.length = 0;
+	}
 	/**
 	 *
 	 *
@@ -25,12 +37,13 @@ var sortUtility = (function($){
 						swappedFlag = true;
 					}
 				}
+				_sortHistory.push(arr.slice(0));
 				// debug.info('b: ' + arr.toString());
 				if (!swappedFlag) {
 					break;
 				}
 			}
-			defer.resolve(arr);
+			defer.resolve(_sortHistory);
 		}
 		return defer.promise();
 	}
@@ -262,113 +275,8 @@ var sortUtility = (function($){
 
 	function _mergeSort (arr) {
 	}
-	// function _quickSort (arr, start, end) {
-	// 	var k,
-	// 		i = start,
-	// 		j = end,
-	// 		copyArr = arr.toString(),
-	// 		left;
-
-	// 	if (arr.length > 1 && j - i > 0) {
-	// 		k = arr[i];
-	// 		while (i < j) {
-	// 			for (; j > i; j--) {
-	// 				if (arr[j] < k) {
-	// 					arr[i] = arr[j];
-	// 					break;
-	// 				}
-	// 			};
-	// 			for (; i < j; i++) {
-	// 				if (arr[i] > k) {
-	// 					arr[j] = arr[i];
-	// 					break;
-	// 				}
-	// 			};
-	// 			arr[i] = k;
-	// 		}
-	// 		// if (arr.toString() !== copyArr) {
-	// 			return _quickSort(arr, 0, j - 1)+_quickSort(arr, j + 1, end);
-	// 		// }
-
-	// 	} else {
-	// 		document.write(arr.toString());
-	// 		document.write('<br >');
-	// 		return arr;
-	// 	}
-	// }
-	// function _quickSort(arr) {
-	// 　　if (arr.length <= 1) { return arr; }
-	// 　　var pivotIndex = Math.floor(arr.length / 2);
-	// 　　var pivot = arr.splice(pivotIndex, 1)[0];
-	// 　　var left = [];
-	// 　　var right = [];
-	// 　　for (var i = 0; i < arr.length; i++){
-	// 　　　　if (arr[i] < pivot) {
-	// 　　　　　　left.push(arr[i]);
-	// 　　　　} else {
-	// 　　　　　　right.push(arr[i]);
-	// 　　　　}
-	// 　　}
-	// 　　return _quickSort(left).concat([pivot], _quickSort(right));
-	// };
-
-	// function _quickSort (arr) {
-	// 	var k, i = 0, j = arr.length;
-
-	// 	if (arr.length > 1) {
-	// 		k = arr[0];
-	// 		while (i < j) {
-	// 			for (; j > i; j--) {
-	// 				if (arr[j] < k) {
-	// 					arr[i] = arr[j];
-	// 					break;
-	// 				}
-	// 			};
-	// 			for (; i < j; i++) {
-	// 				if (arr[i] > k) {
-	// 					arr[j] = arr[i];
-	// 					break;
-	// 				}
-	// 			};
-	// 			arr[i] = k;
-	// 		}
-	// 		document.write(arr.toString());
-	// 		document.write('<br >');
-	// 		_quickSort(arr.slice(0, i));
-	// 		_quickSort(arr.slice(i + 1, arr.length));
-
-	// 		console.log(arr);
-	// 	}
-	// }
-	// function _initQuickSort (arr) {
-	// 	var key,
-	// 		keyIndex,
-	// 		temp,
-	// 		copyArr;
-
-	// 	if (arr !== undefined && arr.length > 1) {
-	// 		key = arr[0];
-	// 		keyIndex = 0;
-	// 	}
-	// 	for (var i = 1; i < arr.length; i++) {
-	// 		if (arr[i] < key) {
-	// 			temp = arr[i];
-	// 			arr.splice(i, 1);
-	// 			arr.splice(0, 0, temp);
-	// 			keyIndex++;
-	// 		}
-	// 	};
-	// 	return arr;
-	// }
 
 	return {
-		bubbleSort: _bubbleSort,
-		lazyInsertionSort: _lazyInsertionSort,
-		insertionSort: _insertionSort,
-		selectionSort: _selectionSort,
-		quickSort: _quickSort,
-		heapSort: _heapSort,
-		shellSort: _shellSort,
-		mergeSort: _mergeSort
+		callSort: _callSort
 	}
 })(jQuery);

@@ -16,76 +16,44 @@ function AppController ($scope) {
 		// this.excuteSort(testArray, canvasEle);
 	};
 
-	$scope.convertStringToArray = function () {
+	$scope.convertStringToArray = function (sortMethodName) {
 		// var dataArray = $scope.tobeSortArray.split(',');
 		// $scope.$apply(function () {
   //           $scope.tobeSortArray = dataArray;
   //       });
 		$scope.tobeSortArray = $scope.randomNumbers(4, 14);
-		$scope.sortedArrayHistory.push($scope.tobeSortArray);
+		
 		barGraph.resetCanvas(true);
-		$scope.excuteSort();
+		$scope.excuteSort(sortMethodName);
 	}
 
-	$scope.excuteSort = function () {
-		var key = 'bubbleSort',
-			testArray = $scope.tobeSortArray;
+	$scope.excuteSort = function (sortMethod) {
+		var	testArray = $scope.tobeSortArray;
 
-		danTimer.createNewTimer(key);
+		danTimer.createNewTimer(sortMethod);
 
-		sortUtility.bubbleSort(testArray).then(
+		sortUtility.callSort(sortMethod, testArray).then(
 			function (response) {
-				doneCallback(response, key);
-
+				doneCallback(response, sortMethod);
+				$scope.sortedArrayHistory = response;
 				barGraph.initBarGraph(response);
-				barGraph.generateBarGraph();
+				barGraph.generateBaseBarGraph();
+				barGraph.drawBarsByStep(0);
 			}
 		);
 
-		key = 'insertionSort';
-		danTimer.createNewTimer(key);
-		sortUtility.insertionSort(testArray).then(
-			function (response) {
-				doneCallback(response, key);
-			}
-		);
-
-		key = 'selectionSort';
-		danTimer.createNewTimer(key);
-		sortUtility.selectionSort(testArray).then(
-			function (response) {
-				doneCallback(response, key);
-			}
-		);
-
-		key = 'shellSort';
-		danTimer.createNewTimer(key);
-		sortUtility.shellSort(testArray).then(
-			function (response) {
-				doneCallback(response, key);
-			}
-		);
-
-		// key = 'heapSort';
-		// danTimer.createNewTimer(key);
+		// sortMethod = 'heapSort';
+		// danTimer.createNewTimer(sortMethod);
 		// sortUtility.heapSort(testArray.slice(0)).then(
 		// 	function (response) {
-		// 		doneCallback(response, key);
+		// 		doneCallback(response, sortMethod);
 		// 	}
 		// );
 
-		key = 'quickSort';
-		danTimer.createNewTimer(key);
-		sortUtility.quickSort(testArray, 0, testArray.length).then(
-			function (response) {
-				doneCallback(response, key);
-			}
-		);
-
-		function doneCallback (response, key) {
-			// document.write(key + ': ' + response + '<br>');
-			danTimer.stopTimer(key);
-			debug.info(key + ': ' + danTimer.getTrackTimerByKey(key) + ' ms');
+		function doneCallback (response, sortMethod) {
+			// document.write(sortMethod + ': ' + response + '<br>');
+			danTimer.stopTimer(sortMethod);
+			debug.info(sortMethod + ': ' + danTimer.getTrackTimerByKey(sortMethod) + ' ms');
 		};
 	};
 

@@ -1,7 +1,8 @@
 var barGraph = (function($){
 	var _data,	// Should be the array
+		_totalSteps = [],
 		_yAxisMax = 400,	// The max length of Y axis
-		_xAxisMax = 800,	// The max length of X axis
+		_xAxisMax = 650,	// The max length of X axis
 		_barWidth,	// The width for each bar
 		_barMargin = 15,	// The margin between two bars
 		_barCounts,	// total counts of bar
@@ -24,7 +25,8 @@ var barGraph = (function($){
 		_yAxisTotalLength = _yAxisMax + _axisPadding;
 
 	function _initBarGraph (dataArray) {
-		_data = dataArray;
+		_totalSteps = dataArray;
+		_data = _totalSteps[0];
 		_barCounts = _data.length;
 		_barWidth = (_xAxisMax - _barCounts * _barMargin) / _barCounts;
 		_yAxisUnitHeight = _yAxisMax / _yAxisUnitCounts;
@@ -69,19 +71,25 @@ var barGraph = (function($){
 		_cxt.closePath();
 	}
 
-	function updateBars () {
-		_drawBars();
+	function _drawBarsByStep(stepNo) {
+		if (stepNo < _totalSteps.length) {
+			_resetCanvas(false);
+			_drawBars(_totalSteps[stepNo]);
+			setTimeout(function () {
+				_drawBarsByStep(++stepNo);
+			}, 1000);
+		}
 	}
 
-	function _drawBars () {
+	function _drawBars (stepArray) {
 		var rectX,
 			rectY,
 			rectHeight,
 			barValue;
 
-		for (var i = 0; i < _data.length; i++) {
+		for (var i = 0; i < stepArray.length; i++) {
 			rectX = _yAxisLabelWidth + (i + 1) * _barMargin + i * _barWidth;
-			rectHeight = _data[i] / _scaleRate;
+			rectHeight = stepArray[i] / _scaleRate;
 			rectY = _yAxisTotalLength - rectHeight;
 
 			_cxt.fillStyle = _barFillColor;
@@ -91,11 +99,11 @@ var barGraph = (function($){
 
 			if (_digits < 9 && _barCounts <= 15) {
 				if (_digits > 8) {
-					barValue = Math.floor(_data[i] / 10000) +  'w';
+					barValue = Math.floor(stepArray[i] / 10000) +  'w';
 				} else if (_digits > 6) {
-					barValue = Math.floor(_data[i] / 1000) +  'k';
+					barValue = Math.floor(stepArray[i] / 1000) +  'k';
 				} else {
-					barValue = _data[i];
+					barValue = stepArray[i];
 				}
 				_drawTexts(barValue, rectX + 2, rectY - 5);
 			}
@@ -134,14 +142,15 @@ var barGraph = (function($){
 		// TDDO
 	}
 
-	function _generateBarGraph () {
+	function _generateBaseBarGraph () {
 		if (_resetWhole) {
 			_calcYAxisMax();
 		}
 		_drawAxis();
 		_drawLabels();
-		_drawBars();
 	}
+
+
 
 	/*
 	 * C
@@ -179,8 +188,9 @@ var barGraph = (function($){
 
 	return {
 		initBarGraph: _initBarGraph,
-		generateBarGraph: _generateBarGraph,
+		generateBaseBarGraph: _generateBaseBarGraph,
 		resetCanvas: _resetCanvas,
-		prepareCanvas: _prepareCanvas
+		prepareCanvas: _prepareCanvas,
+		drawBarsByStep: _drawBarsByStep
 	}
 })(jQuery);
