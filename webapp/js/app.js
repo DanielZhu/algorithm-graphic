@@ -4,7 +4,7 @@ function AppController ($scope) {
 	$scope.canvasEle = null;
 	$scope.tobeSortArray = [];
 	$scope.sortedArrayHistory = [];
-	$scope.sortMethod = ['bubble', 'lazyInsertion', 'insertion', 'selection', 'quick', 'heap', 'shell', 'merge'];
+	$scope.sortMethod = ['Bubble', 'Insertion', 'Selection', 'Quick', 'Heap', 'Shell', 'Merge'];
 
 	initialApp = function () {
 		$scope.canvasEle = document.getElementById('sortGraphic');

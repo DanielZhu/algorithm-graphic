@@ -67,14 +67,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-@font-face {
-  font-family: 'FontAwesome';
-  src: url("/font/fontawesome-webfont.eot");
-  src: url("/font/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("/font/fontawesome-webfont.woff") format("woff"), url("/font/fontawesome-webfont.ttf") format("truetype"), url("/font/fontawesome-webfont.svgz#FontAwesomeRegular") format("svg"), url("/font/fontawesome-webfont.svg#FontAwesomeRegular") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* line 3, ../al-gra/sass/base/_layout.scss */
 * {
   margin: 0;
@@ -177,6 +169,43 @@ body {
   font-family: 'Open Sans', 'Anonymous Pro', 'Source Code Pro';
   font-size: 12px;
   background-color: white;
+}
+
+/* line 6, ../al-gra/sass/custom/_custom.scss */
+.header-bar {
+  letter-spacing: 0px;
+  border-bottom: 1px solid #eee;
+}
+/* line 9, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-logo {
+  float: left;
+}
+/* line 12, ../al-gra/sass/custom/_custom.scss */
+.header-bar .sort-method-list {
+  float: right;
+  text-align: right;
+}
+/* line 15, ../al-gra/sass/custom/_custom.scss */
+.header-bar .sort-method-list ul {
+  list-style: none;
+  text-align: center;
+  padding: 10px 0;
+}
+/* line 20, ../al-gra/sass/custom/_custom.scss */
+.header-bar .sort-method-list ul li {
+  display: inline;
+  text-transform: uppercase;
+  padding: 0 10px;
+  letter-spacing: 5px;
+}
+/* line 25, ../al-gra/sass/custom/_custom.scss */
+.header-bar .sort-method-list ul li a {
+  text-decoration: none;
+  color: #000;
+}
+/* line 28, ../al-gra/sass/custom/_custom.scss */
+.header-bar .sort-method-list ul li a:hover {
+  text-decoration: underline;
 }
 
 /* import typography */
