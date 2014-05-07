@@ -186,50 +186,56 @@ body {
   float: left;
 }
 /* line 17, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-progressbar {
+  margin: 5px 10px;
+  float: left;
+  width: 20%;
+}
+/* line 22, ../al-gra/sass/custom/_custom.scss */
 .header-bar .sort-method-list {
   float: right;
   text-align: right;
 }
-/* line 20, ../al-gra/sass/custom/_custom.scss */
+/* line 25, ../al-gra/sass/custom/_custom.scss */
 .header-bar .sort-method-list ul {
   list-style: none;
   text-align: center;
   padding: 8px 0;
 }
-/* line 24, ../al-gra/sass/custom/_custom.scss */
+/* line 29, ../al-gra/sass/custom/_custom.scss */
 .header-bar .sort-method-list ul li {
   display: inline;
   text-transform: uppercase;
   padding: 0 10px;
   letter-spacing: 2px;
 }
-/* line 29, ../al-gra/sass/custom/_custom.scss */
+/* line 34, ../al-gra/sass/custom/_custom.scss */
 .header-bar .sort-method-list ul li a {
   text-decoration: none;
   color: #000;
 }
-/* line 32, ../al-gra/sass/custom/_custom.scss */
+/* line 37, ../al-gra/sass/custom/_custom.scss */
 .header-bar .sort-method-list ul li a:hover {
   text-decoration: underline;
 }
 
-/* line 41, ../al-gra/sass/custom/_custom.scss */
+/* line 46, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history {
   text-align: left;
   clear: both;
 }
-/* line 44, ../al-gra/sass/custom/_custom.scss */
+/* line 49, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul {
   list-style: none;
   text-align: left;
   padding: 8px 0;
 }
-/* line 48, ../al-gra/sass/custom/_custom.scss */
+/* line 53, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul li {
   font-size: 14px;
   padding: 0 10px;
 }
-/* line 51, ../al-gra/sass/custom/_custom.scss */
+/* line 56, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul li a {
   text-decoration: none;
   color: #000;

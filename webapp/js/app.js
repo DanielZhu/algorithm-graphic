@@ -5,6 +5,8 @@ function AppController ($scope) {
   $scope.tobeSortArray = [];
   $scope.sortedArrayHistory = [];
   $scope.sortMethod = ['Bubble', 'Insertion', 'Selection', 'Quick', 'Heap', 'Shell', 'Merge'];
+  $scope.sortProgress = 0;
+  $scope.sortInterval = 1000;
 
   initialApp = function () {
     $scope.canvasEle = document.getElementById('sortGraphic');
@@ -21,7 +23,7 @@ function AppController ($scope) {
     // $scope.$apply(function () {
   //           $scope.tobeSortArray = dataArray;
   //       });
-    $scope.tobeSortArray = $scope.randomNumbers(4, 14);
+    $scope.tobeSortArray = $scope.randomNumbers(4, 12);
     
     barGraph.resetCanvas(true);
     $scope.excuteSort(sortMethodName);
@@ -33,13 +35,15 @@ function AppController ($scope) {
     danTimer.createNewTimer(sortMethod);
     barGraph.initBarGraph(testArray);
     barGraph.generateBaseBarGraph();
-    sortUtility.callSort(sortMethod, testArray).then(
-      function (response) {
-        doneCallback(response, sortMethod);
-
-        
-      }
-    );
+    var promise = sortUtility.callSort(sortMethod, testArray);
+    promise.done(function (response) {
+      doneCallback(response, sortMethod);
+    });
+    promise.progress(function (progress) {
+      $scope.sortProgress = progress;
+      $scope.$apply();
+      debug.info('progress: ' + $scope.sortProgress);
+    });
 
     // sortMethod = 'heapSort';
     // danTimer.createNewTimer(sortMethod);

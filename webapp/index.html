@@ -23,12 +23,14 @@
   <div ng-controller="AppController">
     <div class="header-bar">
       <div class="header-bar-logo">Sort Graphic by Daniel</div>
+      <progress value={{sortProgress}} max="100" class="header-bar-progressbar"></progress>
       <div class="sort-method-list">
         <ul>
           <li ng-repeat="(key, value) in sortMethod" ng-click="convertStringToArray(value)"><a href="#">{{value}}</a></li>
         </ul>
       </div>
     </div>
+    <div><input type="text" ng-model="sortInterval" size="4"></div>
     <!-- <input type="text" ng-model="tobeSortArray" placeholder=""> -->
     <canvas id="sortGraphic" width="1000" height="500" style="margin: 10px 0px;">Your browser does not support the HTML5 canvas tag.</canvas>
     <div class="sort-list-history">

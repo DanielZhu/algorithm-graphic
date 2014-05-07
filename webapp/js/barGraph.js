@@ -1,6 +1,7 @@
 var barGraph = (function($){
   var _data,  // Should be the array
     _totalSteps = [],
+    _lastStepArray = [],
     _yAxisMax = 400,  // The max length of Y axis
     _xAxisMax = 650,  // The max length of X axis
     _barWidth,  // The width for each bar
@@ -62,10 +63,9 @@ var barGraph = (function($){
   }
 
   function clearRectByIndex (index) {
-    if (index > 0 && index < _data.length) {
+    if (index >= 0 && index < _data.length) {
       rectX = _yAxisLabelWidth + (index + 1) * _barMargin + index * _barWidth;
-      rectHeight = _data[index] / _scaleRate;
-      _cxt.clearRect(rectX - 2, 0, _barWidth + 4, _yAxisMax);
+      _cxt.clearRect(rectX - 2, 0, _barWidth + 4, _yAxisTotalLength);
     }
   }
 
@@ -81,24 +81,29 @@ var barGraph = (function($){
     _cxt.closePath();
   }
 
-  function _drawBarsByStep(stepNo) {
-    if (stepNo < _totalSteps.length) {
-      _resetCanvas(false);
-      _drawBars(_totalSteps[stepNo]);
-      setTimeout(function () {
-        _drawBarsByStep(++stepNo);
-      }, 1000);
-    }
-  }
+  // function _drawBarsByStep (stepNo) {
+  //   if (stepNo < _totalSteps.length) {
+  //     _resetCanvas(false);
+  //     _drawBars(_totalSteps[stepNo]);
+  //     setTimeout(function () {
+  //       _drawBarsByStep(++stepNo);
+  //     }, 1000);
+  //   }
+  // }
 
   function _drawBars (stepArray, focusIndexPre, focusIndexNext) {
     var rectX,
       rectY,
       rectHeight,
-      barValue;
-    clearRectByIndex(_oldFocusIndexPre);
-    clearRectByIndex(_oldFocusIndexNext);
+      barValue,
+      oldFocusIndexs = [_oldFocusIndexPre, _oldFocusIndexNext];
+
     for (var i = 0; i < stepArray.length; i++) {
+      if (stepArray[i] === _lastStepArray[i] && i > 0 && oldFocusIndexs.indexOf(i) === -1) {
+        continue;
+      } else {
+        clearRectByIndex(i);
+      }
       rectX = _yAxisLabelWidth + (i + 1) * _barMargin + i * _barWidth;
       rectHeight = stepArray[i] / _scaleRate;
       rectY = _yAxisTotalLength - rectHeight;
@@ -124,10 +129,12 @@ var barGraph = (function($){
         }
         _drawTexts(barValue, rectX + 2, rectY - 5);
       }
+    }
 
-      _oldFocusIndexPre = focusIndexPre;
-      _oldFocusIndexNext = focusIndexNext;
-    };
+    _oldFocusIndexPre = focusIndexPre;
+    _oldFocusIndexNext = focusIndexNext;
+
+    _lastStepArray = stepArray.slice(0);
   }
 
   function _drawTexts (value, x, y) {
@@ -211,7 +218,7 @@ var barGraph = (function($){
     generateBaseBarGraph: _generateBaseBarGraph,
     resetCanvas: _resetCanvas,
     prepareCanvas: _prepareCanvas,
-    drawBarsByStep: _drawBarsByStep,
+    // drawBarsByStep: _drawBarsByStep,
     drawBars: _drawBars
   }
 })(jQuery);

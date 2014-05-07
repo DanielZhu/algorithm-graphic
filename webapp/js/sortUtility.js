@@ -1,5 +1,6 @@
 var sortUtility = (function($){
-  var _sortHistory = [];
+  var _sortHistory = [],
+    _startTime = 0;
   // Max in the end, min in the start
 
   function _callSort(method, array) {
@@ -7,6 +8,7 @@ var sortUtility = (function($){
 
     _clearSortHistory();
 
+    _startTime = Date.parse(new Date());
     return eval(sortFun);
   }
 
@@ -14,6 +16,28 @@ var sortUtility = (function($){
     _sortHistory = [];
     _sortHistory.length = 0;
   }
+
+  var delayed = (function () {
+    var queue = [];
+
+    function processQueue() {
+      if (queue.length > 0) {
+        setTimeout(function () {
+          queue.shift().cb();
+          processQueue();
+        }, queue[0].delay);
+      }
+    }
+
+    return function delayed(delay, cb) {
+      queue.push({ delay: delay, cb: cb });
+
+      if (queue.length === 1) {
+        processQueue();
+      }
+    };
+  }());
+
   /**
    *
    *
@@ -23,29 +47,37 @@ var sortUtility = (function($){
     var i = 0,
       j = 0,
       swappedFlag = false,
-      defer = new $.Deferred();
+      defer = $.Deferred();
 
-    if (arr !== undefined) {
-      for (i ; i < arr.length; i += 1) {
-        swappedFlag = false;
-        j = 0;
-        for (j ; j < arr.length - i; j += 1) {
-          if (arr[j] > arr[j + 1]) {
-            temp = arr[j];
-            arr[j] = arr[j + 1];
-            arr[j + 1] = temp;
-            swappedFlag = true;
+    setTimeout(function () {
+        for (; i < arr.length; i += 1) {
+          swappedFlag = false;
+          for (j = 0; j < arr.length - i; j += 1) {
+            delayed(100, function(i, j, arr, swappedFlag) {
+              return function() {
+                console.log(i, j);
+                if (arr[j] > arr[j + 1]) {
+                  temp = arr[j];
+                  arr[j] = arr[j + 1];
+                  arr[j + 1] = temp;
+                  swappedFlag = true;
+                }
+                barGraph.drawBars(arr, j, j + 1);
+              };
+            }(i, j, arr, swappedFlag));
           }
-          barGraph.drawBars(arr, j, j + 1);
+          _sortHistory.push(arr.slice(0));
+          // debug.info('b: ' + arr.toString());
+          if (!swappedFlag) {
+            defer.notify(1 * 100);
+            // break;
+          } else {
+            defer.notify(i / (arr.length - 1) * 100);
+          }
         }
-        _sortHistory.push(arr.slice(0));
-        // debug.info('b: ' + arr.toString());
-        if (!swappedFlag) {
-          break;
-        }
-      }
-      defer.resolve(_sortHistory);
-    }
+        // defer.resolve(_sortHistory);
+    }, 1000);
+    
     return defer.promise();
   }
 
