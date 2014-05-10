@@ -5,12 +5,14 @@ var barGraph = (function($){
     _yAxisMax = 400,  // The max length of Y axis
     _xAxisMax = 650,  // The max length of X axis
     _barWidth,  // The width for each bar
-    _barMargin = 15,  // The margin between two bars
+    _barMargin = 2,  // The margin between two bars
+    _barStartX = 15,
     _barCounts, // total counts of bar
     _yAxisUnitCounts = 5,
     _yAxisUnitHeight, // Divide y axis to several part
     _barFillColor = '#0000FF',
-    _barFocusColor = '#00FFFF',
+    _barFocusColor = '#FF00FF',
+    _barExtraHighColor = '#FF0000',
     _barTextColor = '#FFFFFF',
     _barLabelColor = '#000000',
     _cxt,
@@ -18,20 +20,19 @@ var barGraph = (function($){
     _digits = 0,
     _scaleRate,
     _arrayCeilInteger,
-    _axisPadding = 50,
+    _axisPadding = 40,
     _resetWhole = null,
     _initialized = false,
     _yAxisLabelWidth = 100,
     _xAxisLabelHeigth = 100,
     _xAxisTotalLength = _xAxisMax + _axisPadding,
     _yAxisTotalLength = _yAxisMax + _axisPadding,
-    _oldFocusIndexPre, 
-    _oldFocusIndexNext;
+    _focusXArray; 
 
   function _initBarGraph (dataArray) {
     _data = dataArray;
     _barCounts = _data.length;
-    _barWidth = (_xAxisMax - _barCounts * _barMargin) / _barCounts;
+    _barWidth = (_xAxisMax - _barCounts * _barMargin - _barStartX) / _barCounts;
     _yAxisUnitHeight = _yAxisMax / _yAxisUnitCounts;
     if (!_initialized) {
       _calcYAxisMax();
@@ -58,13 +59,13 @@ var barGraph = (function($){
     if (clearWhole) {
       _cxt.clearRect(0, 0, _canvas.width, _canvas.height);
     } else {
-      _cxt.clearRect(_yAxisLabelWidth + _barMargin, 0, _xAxisTotalLength, _yAxisTotalLength - 2);
+      _cxt.clearRect(_yAxisLabelWidth + _barStartX + _barMargin, 0, _xAxisTotalLength, _yAxisTotalLength - 2);
     }
   }
 
   function clearRectByIndex (index) {
     if (index >= 0 && index < _data.length) {
-      rectX = _yAxisLabelWidth + (index + 1) * _barMargin + index * _barWidth;
+      rectX = _yAxisLabelWidth + _barStartX + (index + 1) * _barMargin + index * _barWidth;
       _cxt.clearRect(rectX - 2, 0, _barWidth + 4, _yAxisTotalLength);
     }
   }
@@ -91,38 +92,41 @@ var barGraph = (function($){
   //   }
   // }
 
-  function _drawBars (stepArray, focusIndexPre, focusIndexNext) {
+  function _drawBars (stepArray, focusXArray, extraHigh) {
     var rectX,
       rectY,
       rectHeight,
-      barValue,
-      oldFocusIndexs = [_oldFocusIndexPre, _oldFocusIndexNext];
+      barValue;
 
     for (var i = 0; i < stepArray.length; i++) {
-      if (stepArray[i] === _lastStepArray[i] && i > 0 && oldFocusIndexs.indexOf(i) === -1) {
-        continue;
-      } else {
+      // if (stepArray[i] === _lastStepArray[i] && i > 0 && _focusXArray.indexOf(i) === -1) {
+      //   continue;
+      // } else {
         clearRectByIndex(i);
-      }
-      rectX = _yAxisLabelWidth + (i + 1) * _barMargin + i * _barWidth;
+      // }
+      rectX = _yAxisLabelWidth + _barStartX + (i + 1) * _barMargin + i * _barWidth;
       rectHeight = stepArray[i] / _scaleRate;
       rectY = _yAxisTotalLength - rectHeight;
 
-      if (i == focusIndexPre || i == focusIndexNext) {
+      if (focusXArray.indexOf(i) !== -1) {
         clearRectByIndex(i);
         _cxt.fillStyle = _barFocusColor; 
       } else {
-
         _cxt.fillStyle = _barFillColor;
       }
+
+      if (extraHigh == i) {
+        _cxt.fillStyle = _barExtraHighColor;
+      }
+
       _cxt.textBaseline = "bottom";
       _cxt.fillRect(rectX, rectY, _barWidth, rectHeight);
       _cxt.stroke();
 
       if (_digits < 9 && _barCounts <= 15) {
-        if (_digits > 8) {
+        if (_digits >= 7) {
           barValue = Math.floor(stepArray[i] / 10000) +  'w';
-        } else if (_digits > 6) {
+        } else if (_digits >= 5) {
           barValue = Math.floor(stepArray[i] / 1000) +  'k';
         } else {
           barValue = stepArray[i];
@@ -131,8 +135,7 @@ var barGraph = (function($){
       }
     }
 
-    _oldFocusIndexPre = focusIndexPre;
-    _oldFocusIndexNext = focusIndexNext;
+    _focusXArray = focusXArray;
 
     _lastStepArray = stepArray.slice(0);
   }
@@ -154,6 +157,7 @@ var barGraph = (function($){
 
       _cxt.beginPath();
       labelYPos = _yAxisTotalLength - _yAxisMax / _yAxisUnitCounts * i;
+      _cxt.fillStyle = '#000000';
       _cxt.moveTo(_yAxisLabelWidth, labelYPos);
       _cxt.lineTo(_yAxisLabelWidth + 10, labelYPos);
       _cxt.stroke();
@@ -176,8 +180,6 @@ var barGraph = (function($){
     _drawAxis();
     _drawLabels();
   }
-
-
 
   /*
    * C

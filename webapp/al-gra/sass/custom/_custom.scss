@@ -5,42 +5,96 @@ body {
   width: 1000px;
 }
 .header-bar {
-  width: 1000px;
-  height: 30px;
+  font-size: 12px;
+  width: 1100px;
+  min-height: 30px;
+  max-height: 80px;
   letter-spacing: 0px;
   border-bottom: 1px solid #eee;
-  .header-bar-logo {
-    font-size: 18px;
-    margin: 5px 5px;
-    float: left;
-  }
-  .header-bar-progressbar {
-    margin: 5px 10px;
-    float: left;
-    width: 20%;
-  }
-  .sort-method-list {
-    float: right;
-    text-align: right;
-    ul {
-      list-style: none;
-      text-align: center;
-      padding: 8px 0;
-      li {
-        display: inline;
-        text-transform: uppercase;
-        padding: 0 10px;
-        letter-spacing: 2px;
-        a {
-          text-decoration: none;
-          color: #000;
-          &:hover {
-            text-decoration: underline;
+  
+  .header-bar-base {
+    position: fixed;
+    opacity: 1;
+    z-index: 10;
+    height: 30px;
+    background-color: white;
+
+    .header-bar-logo {
+      font-size: 18px;
+      margin: 5px 5px;
+      float: left;
+    }
+    .header-bar-progress {
+      margin: 5px 10px;
+      float: left;
+      .header-bar-progress-bar {
+        width: 200px;
+      }
+      .header-bar-progress-text {
+        font-size: 14px;
+        margin: 5px 2px 5px 10px;
+      }
+    }
+    .advanced-btn {
+      border: none;
+      padding: 5px 10px;
+      position: absolute;
+      background: #fff;
+      letter-spacing: 2px;
+      &:hover {
+        padding: 5px 10px;
+        -webkit-box-shadow: 0 2px 4px #d6d6d6;
+        border: 1px solid #d6d6d6;
+        box-shadow: 0 2px 4px #d6d6d6;
+        color: #333;
+      }
+      &:active {
+        background: #d6d6d6;
+      }
+    }
+    .advanced-btn-active {
+        background-color: #d6d6d6;
+    }
+    .sort-method-list {
+      float: right;
+      text-align: left;
+      ul {
+        list-style: none;
+        text-align: center;
+        padding: 8px 0;
+        li {
+          display: inline;
+          text-transform: uppercase;
+          padding: 0 10px;
+          letter-spacing: 2px;
+          a {
+            text-decoration: none;
+            color: #000;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
     }
   }
+  .header-bar-more {
+    opacity: 1;
+    z-index: 10;
+    clear: both;
+    height: 30px;
+    position: absolute;
+    top: 35px;
+    font-size: 14px;
+    .more-label {
+      padding: 2px 5px;
+      letter-spacing: 0px;
+    }
+  }
+}
+
+#sortGraphic {
+  z-index: 0;
 }
 
 .sort-list-history {
@@ -61,3 +115,26 @@ body {
   }
 }
 
+.animate-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  opacity:1;
+  background:white;
+}
+
+.animate-hide.ng-hide-add,
+.animate-hide.ng-hide-remove {
+  display:block!important;
+}
+
+.animate-hide.ng-hide {
+  line-height:0;
+  opacity:0;
+  padding:0 10px;
+}
+
+.check-element {
+  padding:10px;
+  border:1px solid black;
+  background:white;
+}

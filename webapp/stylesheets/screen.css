@@ -174,71 +174,161 @@ body {
 
 /* line 7, ../al-gra/sass/custom/_custom.scss */
 .header-bar {
-  width: 1000px;
-  height: 30px;
+  font-size: 12px;
+  width: 1100px;
+  min-height: 30px;
+  max-height: 80px;
   letter-spacing: 0px;
   border-bottom: 1px solid #eee;
 }
-/* line 12, ../al-gra/sass/custom/_custom.scss */
-.header-bar .header-bar-logo {
+/* line 15, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base {
+  position: fixed;
+  opacity: 1;
+  z-index: 10;
+  height: 30px;
+  background-color: white;
+}
+/* line 22, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .header-bar-logo {
   font-size: 18px;
   margin: 5px 5px;
   float: left;
 }
-/* line 17, ../al-gra/sass/custom/_custom.scss */
-.header-bar .header-bar-progressbar {
+/* line 27, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .header-bar-progress {
   margin: 5px 10px;
   float: left;
-  width: 20%;
 }
-/* line 22, ../al-gra/sass/custom/_custom.scss */
-.header-bar .sort-method-list {
+/* line 30, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .header-bar-progress .header-bar-progress-bar {
+  width: 200px;
+}
+/* line 33, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .header-bar-progress .header-bar-progress-text {
+  font-size: 14px;
+  margin: 5px 2px 5px 10px;
+}
+/* line 38, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .advanced-btn {
+  border: none;
+  padding: 5px 10px;
+  position: absolute;
+  background: #fff;
+  letter-spacing: 2px;
+}
+/* line 44, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .advanced-btn:hover {
+  padding: 5px 10px;
+  -webkit-box-shadow: 0 2px 4px #d6d6d6;
+  border: 1px solid #d6d6d6;
+  box-shadow: 0 2px 4px #d6d6d6;
+  color: #333;
+}
+/* line 51, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .advanced-btn:active {
+  background: #d6d6d6;
+}
+/* line 55, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .advanced-btn-active {
+  background-color: #d6d6d6;
+}
+/* line 58, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .sort-method-list {
   float: right;
-  text-align: right;
+  text-align: left;
 }
-/* line 25, ../al-gra/sass/custom/_custom.scss */
-.header-bar .sort-method-list ul {
+/* line 61, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .sort-method-list ul {
   list-style: none;
   text-align: center;
   padding: 8px 0;
 }
-/* line 29, ../al-gra/sass/custom/_custom.scss */
-.header-bar .sort-method-list ul li {
+/* line 65, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .sort-method-list ul li {
   display: inline;
   text-transform: uppercase;
   padding: 0 10px;
   letter-spacing: 2px;
 }
-/* line 34, ../al-gra/sass/custom/_custom.scss */
-.header-bar .sort-method-list ul li a {
+/* line 70, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .sort-method-list ul li a {
   text-decoration: none;
   color: #000;
 }
-/* line 37, ../al-gra/sass/custom/_custom.scss */
-.header-bar .sort-method-list ul li a:hover {
+/* line 73, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-base .sort-method-list ul li a:hover {
   text-decoration: underline;
 }
+/* line 81, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-more {
+  opacity: 1;
+  z-index: 10;
+  clear: both;
+  height: 30px;
+  position: absolute;
+  top: 35px;
+  font-size: 14px;
+}
+/* line 89, ../al-gra/sass/custom/_custom.scss */
+.header-bar .header-bar-more .more-label {
+  padding: 2px 5px;
+  letter-spacing: 0px;
+}
 
-/* line 46, ../al-gra/sass/custom/_custom.scss */
+/* line 96, ../al-gra/sass/custom/_custom.scss */
+#sortGraphic {
+  z-index: 0;
+}
+
+/* line 100, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history {
   text-align: left;
   clear: both;
 }
-/* line 49, ../al-gra/sass/custom/_custom.scss */
+/* line 103, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul {
   list-style: none;
   text-align: left;
   padding: 8px 0;
 }
-/* line 53, ../al-gra/sass/custom/_custom.scss */
+/* line 107, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul li {
   font-size: 14px;
   padding: 0 10px;
 }
-/* line 56, ../al-gra/sass/custom/_custom.scss */
+/* line 110, ../al-gra/sass/custom/_custom.scss */
 .sort-list-history ul li a {
   text-decoration: none;
   color: #000;
+}
+
+/* line 118, ../al-gra/sass/custom/_custom.scss */
+.animate-hide {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  opacity: 1;
+  background: white;
+}
+
+/* line 126, ../al-gra/sass/custom/_custom.scss */
+.animate-hide.ng-hide-add,
+.animate-hide.ng-hide-remove {
+  display: block !important;
+}
+
+/* line 130, ../al-gra/sass/custom/_custom.scss */
+.animate-hide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+/* line 136, ../al-gra/sass/custom/_custom.scss */
+.check-element {
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
 }
 
 /* import typography */
