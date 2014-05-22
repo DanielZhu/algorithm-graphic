@@ -1,9 +1,15 @@
 var sortUtilityOrigin = (function($){
 
   function _callSort(method, array, params) {
-    if (params === undefined) params = []; 
-    var paramsStr = params.toString();
-    var sortFun = '_' + method.toLowerCase() + 'Sort([' + array + '], ' + paramsStr + ')';
+    var paramsStr,
+      sortFun;
+
+    if (params === undefined) {
+      params = []; 
+      sortFun = '_' + method.toLowerCase() + 'Sort([' + array + '])';
+    } else {
+      sortFun = '_' + method.toLowerCase() + 'Sort([' + array + '], ' + params.toString() + ')';
+    }
 
     return eval(sortFun);
   }

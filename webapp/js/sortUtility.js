@@ -64,9 +64,7 @@ var sortUtility = (function($){
           swappedFlag = false;
           for (j = 0; j < arr.length - i; j += 1) {
             if (arr[j] > arr[j + 1]) {
-              temp = arr[j];
-              arr[j] = arr[j + 1];
-              arr[j + 1] = temp;
+              _swapObjects(arr, j, j + 1);
               swappedFlag = true;
    
               delayed(timeInterval, function (j, arr) {
@@ -138,10 +136,8 @@ var sortUtility = (function($){
       for (var i = 1; i < arr.length; i++) {
         for (var j = i; j > 0; j--) {
           if (arr[j] < arr[j - 1]) {
-            var temp = arr[j];
-            arr[j] = arr[j - 1];
-            arr[j - 1] = temp;
-  
+            _swapObjects(arr, j, j - 1);
+
             delayed(timeInterval, function (j, arr) {
               return function() {
                 progress = (_queueTotalCount - _queue.length) / (_queueTotalCount) * 100;
@@ -184,9 +180,7 @@ var sortUtility = (function($){
           }
         }
         if (minValue !== arr[exeX]) {
-          var temp = arr[minX];
-          arr[minX] = arr[exeX];
-          arr[exeX] = temp;
+          _swapObjects(arr, minX, exeX);
         }
         delayed(timeInterval, function (exeX, minX, arr) {
           return function() {
@@ -283,9 +277,7 @@ var sortUtility = (function($){
 
     setTimeout(function () {
       for (var i = 0; i < arr.length; i++) {
-        temp = arr[0];
-        arr[0] = arr[arr.length - 1 - i];
-        arr[arr.length - 1 - i] = temp;
+        _swapObjects(arr, 0, arr.length - 1 - i);
 
         // arr.length -= 1;
         frontArr = arr.slice(0, arr.length - 1 - i);
@@ -394,32 +386,18 @@ var sortUtility = (function($){
 
   function _mergeSort (arr, timeInterval) {
     // set group by 2^i (i >= 1)
-    var pow = 1;
-    var groupSize = Math.pow(2, pow); // 2, 4, 8, 16...
-    var groupCount = arr.length; // groupSize
-    var middleArr = [];
-    var defer = $.Deferred(),
+    var pow = 1,
+      groupSize = Math.pow(2, pow), // 2, 4, 8, 16...
+      groupCount = arr.length / groupSize, // groupSize
+      middleArr = [],
+      defer = $.Deferred(),
       progress = 0;
 
-    // while (groupCount > 1) {
-      for (var i = 0; i < groupCount; i += groupSize) {
-        if (arr[i] > arr[i + 1]) {
-          _swapObjects(arr, i, i + 1);
-        }
-      };
-      pow++;
-      debug.info(arr.toString());
-      groupSize = Math.pow(2, pow);
-      groupCount = arr.length / groupSize;
-    // }
-    // sort within the group
-
     while (groupCount > 1) {
-      middleArr = [];
-      // Sort the sub group
       for (var j = 0; j < groupCount; j += 1) {
         var end = ((j + 1) * groupSize - 1 > arr.length) ?　arr.length : ((j + 1) * groupSize - 1);
         arr = sortUtilityOrigin.callSort('quick', arr, [j * groupSize, end]);
+        barGraph.drawBars(arr, [j * groupSize, end]);
       }
 
       for (var i = 0; i < groupCount; i += 2) {
@@ -436,23 +414,23 @@ var sortUtility = (function($){
         }
         var lastPart = arr.slice(i * groupSize + middleArr.length);
         arr = arr.slice(0, i * groupSize).concat(middleArr, lastPart);
+        debug.info(arr.toString());
+        delayed(timeInterval, function (arr) {
+          return function() {
+            progress = (_queueTotalCount - _queue.length) / (_queueTotalCount) * 100;
+            if (progress == 100) {
+              barGraph.drawBars(arr, []);
+            } else {
+              barGraph.drawBars(arr, []);
+            }
+
+            defer.notify(progress);
+            debug.info(arr.toString());
+          }
+        }(arr));
       }
       pow++;
-      delayed(timeInterval, function (arr) {
-        return function() {
-          progress = (_queueTotalCount - _queue.length) / (_queueTotalCount) * 100;
-          if (progress == 100) {
-            barGraph.drawBars(arr, []);
-          } else {
-            barGraph.drawBars(arr, []);
-          }
 
-          defer.notify(progress);
-          debug.info(arr.toString());
-        }
-      }(arr));
-
-      debug.info(arr.toString());
       groupSize = Math.pow(2, pow);
       groupCount = arr.length / groupSize;
     }
